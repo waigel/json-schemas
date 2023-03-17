@@ -28,13 +28,8 @@ jobs:
         if: ${{ failure() }}
         with:
           script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '👋 @{{ author }}
-            
-                Thank you for raising your pull request.
+           const comment = '
+                👋 Thank you for raising your pull request.
                 
                 Your pull request contains invalid JSON schema files. Please check the result of validation:
                 
@@ -44,5 +39,10 @@ jobs:
                 
                 ```
                 
-                Please fix the validation issues, otherwise this pull request cannot be accepted.'
+                Please fix the validation issues, otherwise this pull request cannot be accepted.';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
             })
