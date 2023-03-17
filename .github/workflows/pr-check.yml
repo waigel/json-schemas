@@ -32,7 +32,7 @@ jobs:
 
             \`\`\`
 
-            ${{ steps.validation.outputs.stdout }}
+            ${{ steps.validation.outputs.stderr }}
 
             \`\`\`
 
