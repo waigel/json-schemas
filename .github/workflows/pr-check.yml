@@ -16,30 +16,26 @@ jobs:
         run: npm install -g ajv-cli
 
       - name: Validate all files with json extension against ajv
+        uses: mathiasvr/command-output@v2
         id: validation
-        run: |
-          output=$(./validate.sh)
-          echo "validation_result=$output" >> $GITHUB_OUTPUT
-          echo $output
-          exit $?
+        run: ./validate.sh
 
       - name: Comment PR with validation result
         uses: actions/github-script@v6.4.0
         if: ${{ failure() }}
         with:
           script: |
-           const comment = '
-                👋 Thank you for raising your pull request.
-                
-                Your pull request contains invalid JSON schema files. Please check the result of validation:
-                
-                ```
-                
-                ${{ steps.validation.outputs.validation_result }}
-                
-                ```
-                
-                Please fix the validation issues, otherwise this pull request cannot be accepted.';
+            const comment = `👋 Thank you for raising your pull request.
+
+            Your pull request contains invalid JSON schema files. Please check the result of validation:
+
+            \`\`\`
+
+            ${{ steps.validation.outputs.stdout }}
+
+            \`\`\`
+
+            Please fix the validation issues, otherwise this pull request cannot be accepted.`;
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
