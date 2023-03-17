@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "http://schema.waigel.com/aws-sm.schema.json",
+    "title": "AWS Secrets Manager configuration for ExternalSecretStore in Kubernetes",
+    "type": "object",
+    "properties": {
+        "version": {
+            "description": "Version of the AWS Secrets Manager configuration",
+            "type": "string",
+            "enum": [
+                "v1"
+            ]
+        },
+        "stores": {
+            "description": "List of AWS Secrets Manager stores that configured in the defined namespace",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "Name of the SecretStore in the cluster",
+                        "type": "string"
+                    },
+                    "namespace": {
+                        "description": "Namespace where the SecretStore is located in the cluster",
+                        "type": "string",
+                        "default": "default"
+                    },
+                    "aws": {
+                        "type": "object",
+                        "properties": {
+                            "region": {
+                                "description": "AWS region where the Secrets Manager is located",
+                                "type": "string"
+                            },
+                            "secretRessources": {
+                                "description": "List of AWS Secrets Manager secret ressources that should be accessable by the SecretStore",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "required": [
+                            "region"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": [
+        "version",
+        "stores"
+    ],
+    "additionalProperties": false
+}
