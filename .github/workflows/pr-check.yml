@@ -17,7 +17,9 @@ jobs:
         id: validation
         continue-on-error: true
         run: |
-          echo "validation_result=$(./validate.sh)" >> $GITHUB_OUTPUT
+          output=$(./validate.sh)
+          echo "validation_result=$output" >> $GITHUB_OUTPUT
+          echo $output
 
 
       - name: Auto Comment if 
