@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "http://schema.waigel.com/aws-sm.schema.json",
     "title": "AWS Secrets Manager configuration for ExternalSecretStore in Kubernetes",
     "type": "object",
