@@ -17,16 +17,12 @@ jobs:
         id: validation
         continue-on-error: true
         run: |
-          output=$(./validate.sh || true)
-          echo "validation_status_code=$?" >> $GITHUB_OUTPUT
-          echo "validation_result=$output" >> $GITHUB_OUTPUT
-          echo "test"
-          echo $output
+          echo "validation_result=$(./validate.sh)" >> $GITHUB_OUTPUT
 
 
       - name: Auto Comment if 
         uses: wow-actions/auto-comment@v1
-        if: always() && steps.validation.output.validation_status_code == 1
+        if: ${{ failure() }}
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pullRequestOpened: >
@@ -43,6 +39,3 @@ jobs:
             ```
             
             Please fix the validation issues, otherwise this pull request cannot be accepted.
-      - name: Exit GitHub actions with status code
-        if: always()
-        run: exit  ${{ steps.validation.outputs.validation_status_code }}
