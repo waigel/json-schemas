@@ -20,7 +20,7 @@ jobs:
           output=$(./validate.sh)
           echo "validation_result=$output" >> $GITHUB_OUTPUT
           echo $output
-
+          exit $?
 
       - name: Auto Comment if 
         uses: wow-actions/auto-comment@v1
