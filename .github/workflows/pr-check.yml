@@ -15,6 +15,7 @@ jobs:
 
       - name: Validate all files with json extension against ajv
         id: validation
+        continue-on-error: true
         run: |
           output=$(./validate.sh)
           echo "validation_status_code=$?" >> $GITHUB_OUTPUT
