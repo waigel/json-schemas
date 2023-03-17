@@ -7,6 +7,9 @@ jobs:
   validating-schemas:
     name: Validating JSON schemas are valid
     runs-on: ubuntu-latest
+    permissions:
+      content: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
@@ -21,12 +24,11 @@ jobs:
           echo $output
           exit $?
 
-      - name: Auto Comment if 
-        uses: wow-actions/auto-comment@v1
+      - name: Comment PR with validation result
+        uses: mshick/add-pr-comment@v2
         if: ${{ failure() }}
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          pullRequestOpened: >
+          message: >
             👋 @{{ author }}
             
             Thank you for raising your pull request.
